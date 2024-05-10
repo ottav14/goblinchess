@@ -3,14 +3,9 @@
 
 #include <stdio.h>
 
-void reset_board(char board[8][8][3]);
-void print_board(char board[8][8][3]);
-
-
-
-
-
-
-
+typedef char Board[8][8][2];
+int valid_move(Board b, char move[2]);
+void reset_board(Board b);
+void print_board(Board b);
 
 #endif

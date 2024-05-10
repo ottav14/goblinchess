@@ -2,56 +2,64 @@
 #include <stdio.h>
 #include "board.h"
 
-void reset_board(char board[8][8][3]) {
+void reset_board(Board b) {
 
 	// Pawns
 	for(int i=0; i<8; i++) {
-		strcpy(board[1][i], "PW");
-		strcpy(board[6][i], "PB");
+		b[1][i][0] = 'P';
+		b[6][i][0] = 'P';
 	}
 
 	// Kings
-	strcpy(board[0][4], "KW");
-	strcpy(board[7][4], "KB");
+	b[0][4][0] = 'K';
+	b[7][4][0] = 'K';
 
 	// Queens
-	strcpy(board[0][3], "QW");
-	strcpy(board[7][3], "QB");
+	b[0][3][0] = 'Q';
+	b[7][3][0] = 'Q';
 
 	// Rooks
-	strcpy(board[0][0], "RW");
-	strcpy(board[0][7], "RW");
-	strcpy(board[7][0], "RB");
-	strcpy(board[7][7], "RB");
+	b[0][0][0] = 'R';
+	b[0][7][0] = 'R';
+	b[7][0][0] = 'R';
+	b[7][7][0] = 'R';
 
     // Knights
-	strcpy(board[0][1], "NW");
-	strcpy(board[0][6], "NW");
-	strcpy(board[7][1], "NB");
-	strcpy(board[7][6], "NB");
+	b[0][1][0] = 'N';
+	b[0][6][0] = 'N';
+	b[7][1][0] = 'N';
+	b[7][6][0] = 'N';
 
     // Bishops
-	strcpy(board[0][2], "BW");
-	strcpy(board[0][5], "BW");
-	strcpy(board[7][2], "BB");
-	strcpy(board[7][5], "BB");
+	b[0][2][0] = 'B';
+	b[0][5][0] = 'B';
+	b[7][2][0] = 'B';
+	b[7][5][0] = 'B';
 
 	// Empty
 	for(int i=2; i<6; i++) {
 		for(int j=0; j<8; j++) {
-			strcpy(board[i][j], "  ");
+			b[i][j][0] = ' ';
 		}
+	}
+
+	// Colors
+	for(int i=0; i<2; i++) {
+		for(int j=0; j<8; j++) {
+			b[i][j][1] = 'B';
+			b[7-i][j][1] = 'W';
+		}	
 	}
 
 	
 }
 
 
-void print_board(char board[8][8][3]) {
+void print_board(Board b) {
 
 	for(int i=0; i<8; i++) {
 		for(int j=0; j<8; j++) {
-			printf("%s  ", board[i][j]);
+			printf("%s  ", b[i][j]);
 		}
 	}
 

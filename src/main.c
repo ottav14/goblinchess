@@ -5,7 +5,27 @@
 
 #define squareLength 2
 
-void init_ncurses(char board[8][8][3]) {
+char current_move[2];
+int current_move_size = 0;
+
+Board main_board;
+
+void update_current_move(char input) {
+	
+	current_move_size += 1;
+	if(current_move_size > 2) {
+		current_move[1] = ' ';
+		current_move_size = 1;
+	}
+	else if(current_move_size == 2) {
+		current_move[1] = current_move[0];
+	}
+	current_move[0] = input;
+
+}
+
+
+void init_ncurses() {
 
     // Initialize NCurses
     initscr();
@@ -30,24 +50,25 @@ void init_ncurses(char board[8][8][3]) {
 	getmaxyx(stdscr, height, width);
 
 	// Initialize board
-	reset_board(board);
+	reset_board(main_board);
 
 
-	display_loop(board, stdscr);
+	display_loop(main_board, stdscr, current_move);
 
 	refresh();
 
 }
 
+
 int main() {
 
-	char board[8][8][3];
 
-	init_ncurses(board);
+	init_ncurses();
 
 	int ch;
 	while ((ch = getch()) != 'q') {
-		display_loop(board, stdscr);
+		update_current_move(ch);
+		display_loop(main_board, stdscr, current_move);
 	}
 
     // Clean up
