@@ -2,11 +2,12 @@
 
 * MAIN
 
-	Glue
+	Initalize sdl
+	Talk to display and board files
 
 * Display
 
-	Handle all ncurses logic
+	Handle display functions
 
 * Board
 
