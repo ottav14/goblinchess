@@ -5,14 +5,13 @@
 
 #define squareLength 2
 
-char board[8][8];
-
-void init_ncurses() {
+void init_ncurses(char board[8][8][3]) {
 
     // Initialize NCurses
     initscr();
     cbreak(); // Disable line buffering
     noecho(); // Don't echo input characters
+	curs_set(0); //Hide cursor
     keypad(stdscr, TRUE); // Enable keypad mode
 	start_color();
 
@@ -31,8 +30,8 @@ void init_ncurses() {
 	getmaxyx(stdscr, height, width);
 
 	// Initialize board
-	char board[8][8];
 	reset_board(board);
+
 
 	display_loop(board, stdscr);
 
@@ -42,8 +41,9 @@ void init_ncurses() {
 
 int main() {
 
+	char board[8][8][3];
 
-	init_ncurses();
+	init_ncurses(board);
 
 	int ch;
 	while ((ch = getch()) != 'q') {
