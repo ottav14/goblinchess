@@ -1,7 +1,8 @@
 #include <ncurses.h>
 #include <stdio.h>
-#include "display.h"
-#include "board.h"
+#include <string.h>
+#include "Display.h"
+#include "Board.h"
 
 #define squareLength 2
 
@@ -36,8 +37,10 @@ void init_ncurses() {
 	start_color();
 
 	// Define color pairs
+	//
 	// Board black: green
 	// Board white: yellow
+	// 
 	//        #      FG           BG
 	init_pair(1, COLOR_WHITE, COLOR_BLUE);  // Background
 	init_pair(2, COLOR_WHITE, COLOR_GREEN); // White on Black
@@ -64,6 +67,17 @@ int main() {
 
 
 	init_ncurses();
+
+
+
+
+
+	
+	
+
+	//printf("%c", p[0]);
+
+
 
 	int ch;
 	while ((ch = getch()) != 'q') {

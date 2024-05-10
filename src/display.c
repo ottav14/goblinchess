@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include <stdio.h>
-#include "display.h"
-#include "board.h"
+#include "Display.h"
+#include "Board.h"
 
 const int square_length = 3;
 
@@ -54,13 +54,17 @@ void draw_pieces(Board b, WINDOW *win) {
 	for(int i=0; i<8; i++) {
 		for(int j=0; j<8; j++) {
 		
+			char p[2];
+			get_piece(b, j, i, p);
+	
 			const int x = width / 2 + (j - 4) * square_length + square_length / 2; 
 			const int y = height / 2 + (i - 4) * square_length + square_length / 2; 
-			const int c = 2*((i + j) % 2 + 1) + (b[i][j][1] == 'B');
+			const int c = 2*((i + j) % 2 + 1) + (p[1] == 'B');
 
 
+			// Draw piece at (x, y)
 			wattron(win, COLOR_PAIR(c));
-			mvwprintw(win, y, x, "%c", b[i][j][0]);
+			mvwprintw(win, y, x, "%c", p[0]);
 			
 
 		}
