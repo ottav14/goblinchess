@@ -6,22 +6,28 @@
 
 #define squareLength 2
 
-char current_move[2];
-int current_move_size = 0;
+char currentMove[3];
+int currentMoveSize = 0;
 
-Board main_board;
+Board mainBoard;
 
-void update_current_move(char input) {
+void resetCurrentMove() {
+	for(int i=0; i<3; i++) {
+		currentMove[i] = ' ';
+	}
+}
+
+void updateCurrentMove(char input) {
 	
-	current_move_size += 1;
-	if(current_move_size > 2) {
-		current_move[1] = ' ';
-		current_move_size = 1;
+	currentMoveSize += 1;
+
+	if(currentMoveSize > 3) {
+		resetCurrentMove();
+		currentMoveSize = 0;
 	}
-	else if(current_move_size == 2) {
-		current_move[1] = current_move[0];
+	else {
+		currentMove[currentMoveSize-1] = input;
 	}
-	current_move[0] = input;
 
 }
 
@@ -53,10 +59,10 @@ void init_ncurses() {
 	getmaxyx(stdscr, height, width);
 
 	// Initialize board
-	reset_board(main_board);
+	resetBoard(mainBoard);
 
 
-	display_loop(main_board, stdscr, current_move);
+	displayLoop(mainBoard, stdscr, currentMove);
 
 	refresh();
 
@@ -67,22 +73,18 @@ int main() {
 
 
 	init_ncurses();
-
-
-
-
-
 	
+	Square* s;
+	coordToSquare(3, 5, s);
+	mvprintw(0, 0, "%c %c\n", **s, *(*s + 1));
 	
-
-	//printf("%c", p[0]);
-
 
 
 	int ch;
-	while ((ch = getch()) != 'q') {
-		update_current_move(ch);
-		display_loop(main_board, stdscr, current_move);
+	while((ch = getch()) != 'q') {
+		updateCurrentMove(ch);
+		displayLoop(mainBoard, stdscr, currentMove);
+		refresh();
 	}
 
     // Clean up

@@ -3,18 +3,18 @@
 #include "Display.h"
 #include "Board.h"
 
-const int square_length = 3;
+const int squareLength = 3;
 
-void display_loop(Board b, WINDOW *win, char current_move[2]) {
+void displayLoop(Board b, WINDOW *win, char currentMove[2]) {
 
 	wbkgd(win, COLOR_PAIR(1));
-	draw_board(win);
-	draw_pieces(b, win);
-	draw_current_move(current_move, win);
+	drawBoard(win);
+	drawPieces(b, win);
+	drawCurrentMove(currentMove, win);
 
 }
 
-void draw_square(const int x, const int y, const int l, const int c, WINDOW *win) {
+void drawSquare(const int x, const int y, const int l, const int c, WINDOW *win) {
 
 	wattron(win, COLOR_PAIR(c));
 	for(int i=0; i<l; i++) {
@@ -24,7 +24,7 @@ void draw_square(const int x, const int y, const int l, const int c, WINDOW *win
 	}
 }
 
-void draw_board(WINDOW *win) {
+void drawBoard(WINDOW *win) {
 
 	// Get terminal size
 	int width, height;
@@ -34,18 +34,18 @@ void draw_board(WINDOW *win) {
 	for(int i=0; i<8; i++) {
 		for(int j=0; j<8; j++) {
 		
-			const int x = width / 2 - (4 - j) * square_length;
-			const int y = height / 2 - (4 - i) * square_length;
+			const int x = width / 2 - (4 - j) * squareLength;
+			const int y = height / 2 - (4 - i) * squareLength;
 			const int c = 2*((i + j) % 2 + 1);
 
-			draw_square(x, y, square_length, c, win);
+			drawSquare(x, y, squareLength, c, win);
 
 		}
 	}
 
 }
 
-void draw_pieces(Board b, WINDOW *win) {
+void drawPieces(Board b, WINDOW *win) {
 
 	// Get terminal size
 	int width, height;
@@ -54,18 +54,15 @@ void draw_pieces(Board b, WINDOW *win) {
 	for(int i=0; i<8; i++) {
 		for(int j=0; j<8; j++) {
 		
-			char p[2];
-			get_piece(b, j, i, p);
 	
-			const int x = width / 2 + (j - 4) * square_length + square_length / 2; 
-			const int y = height / 2 + (i - 4) * square_length + square_length / 2; 
-			const int c = 2*((i + j) % 2 + 1) + (p[1] == 'B');
+			const int x = width / 2 + (j - 4) * squareLength + squareLength / 2; 
+			const int y = height / 2 + (i - 4) * squareLength + squareLength / 2; 
+			const int c = 2*((i + j) % 2 + 1) + (b[i][j][1] == 'B');
 
 
 			// Draw piece at (x, y)
 			wattron(win, COLOR_PAIR(c));
-			mvwprintw(win, y, x, "%c", p[0]);
-			
+			mvwprintw(win, y, x, "%c", b[i][j][0]);
 
 		}
 	}
@@ -73,9 +70,9 @@ void draw_pieces(Board b, WINDOW *win) {
 
 }
 
-void draw_current_move(char current_move[2], WINDOW *win) {
+void drawCurrentMove(char currentMove[2], WINDOW *win) {
 
-	mvwprintw(win, 10, 10, "Current move: %c%c", current_move[0], current_move[1]);	
+	mvwprintw(win, 10, 10, "Current move: %c%c%c", currentMove[0], currentMove[1], currentMove[2]);	
 
 }
 

@@ -3,23 +3,17 @@
 
 #include <stdio.h>
 
-typedef char Move[2];
+typedef char Piece[2];
+typedef char Move[3];
+typedef char Square[2];
 
-typedef struct {
+typedef Piece Board[8][8];
 
-	char name[2];
-	char piece[2];
-
-} Square;
-
-typedef Square Board[8][8];
-
-Square* get_position(Board b, char p[2]);
-Move* get_moves(Board b, char p[2]);
-int valid_move(Board b, Move m);
-void reset_board(Board b);
-void print_board(Board b);
-void set_piece(Board b, int x, int y, char p[2]);
-void get_piece(Board b, int x, int y, char *p);
+void resetBoard(Board b);
+void printBoard(Board b);
+void coordToSquare(int x, int y, Square* s);
+void setPiece(Board b, int x, int y, char p, char q);
+Piece* getPiece(Board b, int x, int y);
+Move* getMoves(Board b, int x, int y);
 
 #endif
